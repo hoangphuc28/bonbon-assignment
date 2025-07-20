@@ -1,0 +1,51 @@
+services:
+  llm-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bonbon-chat
+    volumes:
+      - .:/app:cached
+    depends_on:
+      - ollama
+      - chroma
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - llm-network
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama-simple
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - llm-network
+    restart: unless-stopped
+    entrypoint: ["/bin/bash", "-c", "\
+      ollama serve & \
+      sleep 5 && \
+      ollama pull phi3 && \
+      wait"]
+
+  chroma:
+    image: ghcr.io/chroma-core/chroma:latest
+    container_name: chroma-db-simple
+    ports:
+      - "9012:9000"
+    volumes:
+      - chroma-data:/chroma
+    networks:
+      - llm-network
+    restart: unless-stopped
+
+networks:
+  llm-network:
+    driver: bridge
+
+volumes:
+  ollama-data:
+  chroma-data:
