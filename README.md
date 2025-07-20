@@ -6,14 +6,14 @@ This repo is created as a submission for BonBon Assignment of Langchain course. 
 
 ---
 
-# 🐳 Prerequisites
+# Prerequisites
 
 - `WSL`
 - `Docker and Docker compose CLI`
 
 ---
 
-# ⚙️ Setup & Run the Chatbot
+# Setup & Run the Chatbot
 
 ### 1. 🧱 Build the Docker images
 
@@ -42,7 +42,7 @@ Wait for these messages showed up, then you can continue to next step:
 - `✅ Document indexing complete!`: Indicates that BonBon FAQ.pdf has already embedded into ChromaDB.
 - `🤖 Chatbot ready! Ask a question (type 'exit' to quit)`: The python code has create agent instance successfully.
 
-### 3. 🖥️ Attach to the chatbot container
+### 3. Attach to the chatbot container
 
 Open a new terminal and run:
 ```bash
@@ -53,7 +53,7 @@ The chatbot running in container `bonbon-chat` waits for user input in an intera
 to enable I/O interaction.
 Replace `bonbon-chat` with the actual name of your chatbot container (if different).
 
-### 4. 🤖 Start chat and exit
+### 4. Start chat and exit
 
 After attach to the `bonbon-chat` container, you could start typing any question then enter.  
 Message `🤖 Bot is thinking...` indicates that the chatbot is trying to give the answer.  
