@@ -1,64 +1,90 @@
-# 🤖 BonBon Assignment
+# BonBon Assignment
 
-This repo is created as a submission for BonBon Assignment of Langchain course. You should focus on 2 assignment file:
-- `assignment.ipynb`: This file is the original one which contains submission for assignment 1 and 2. However, because of the expired of the free-trial token of HuggingFace (an open-source AI provider), we can not interact with the chatbot in this submission anymore. So I created the `assignment.py` below.
-- `assignment.py`: This file is the final submission for assignment 1 and 2. Which requires you to wait for some set-up download steps because this will run an Ollama model behind the screen instead of using a cloud hosted model (like OpenAI or HuggingFace).
+This repository contains the submission for the BonBon Assignment in the Langchain course. Please focus on the following two key files:
 
----
-
-# Prerequisites
-
-- `WSL`
-- `Docker and Docker compose CLI`
+- **`assignment.py`**: This script is the final, fully functional submission for Assignment 1 and 2. Instead of relying on cloud-hosted models like HuggingFace or OpenAI, it runs a local model through Ollama, which requires some initial downloads and setup.
 
 ---
 
-# Setup & Run the Chatbot
+## Prerequisites
 
-### 1. 🧱 Build the Docker images
+Ensure the following tools are installed in your environment:
+
+- **WSL**
+- **Docker & Docker Compose CLI**
+
+---
+
+## Setup & Run the Chatbot
+
+### 1. Build Docker Images
+
+Run the command below to build the required Docker images and install all dependencies:
 
 ```bash
 docker compose build
 ```
-This installs all dependencies and prepares the environment for python app (require time to install).  
-⚠️ Be aware that this step requires time to install.
 
-### 2. 🚀 Start all services
+> ⚠️ This step may take some time as it downloads and installs necessary packages.
+
+---
+
+### 2. Start All Services
+
+Start the full system with:
 
 ```bash
 docker compose up
 ```
-This will start all services, including `Ollama` server on the background and pull your chosen model (in this case `phi3`).  
-You could change to another agent supported model if needed (change in `assignment.py` and `docker-compose.yml`).  
-⚠️ Be aware that this step requires time to pull the model.  
-⚠️ If you freeze at this message log from `Ollama` like below, please exit then `docker compose up` again:
-```
-ollama-simple      | verifying sha256 digest
-ollama-simple      | writing manifest
-ollama-simple      | success
-```
 
-Wait for these messages showed up, then you can continue to next step:
-- `✅ Document indexing complete!`: Indicates that BonBon FAQ.pdf has already embedded into ChromaDB.
-- `🤖 Chatbot ready! Ask a question (type 'exit' to quit)`: The python code has create agent instance successfully.
+This command launches all services including the Ollama server and begins pulling the selected model (default is `phi3`).
 
-### 3. Attach to the chatbot container
+> ⚠️ Model downloading may take a while.  
+> ⚠️ If the logs hang at the following message:
+> ```
+> ollama-simple      | verifying sha256 digest
+> ollama-simple      | writing manifest
+> ollama-simple      | success
+> ```
+> simply stop the process and run `docker compose up` again.
 
-Open a new terminal and run:
+Wait for these key logs before proceeding:
+
+- `✅ Document indexing complete!`: Indicates successful embedding of `BonBon FAQ.pdf` into ChromaDB.
+- `🤖 Chatbot ready! Ask a question (type 'exit' to quit)`: Confirms the chatbot agent has been initialized and is ready.
+
+---
+
+### 3. Attach to the Chatbot Container
+
+In a new terminal window, attach to the chatbot container to begin interaction:
+
 ```bash
 docker attach bonbon-chat
 ```
 
-The chatbot running in container `bonbon-chat` waits for user input in an interactive CLI, so we need to attach to it
-to enable I/O interaction.
-Replace `bonbon-chat` with the actual name of your chatbot container (if different).
+Replace `bonbon-chat` with the actual name of your container if it differs.
 
-### 4. Start chat and exit
+---
 
-After attach to the `bonbon-chat` container, you could start typing any question then enter.  
-Message `🤖 Bot is thinking...` indicates that the chatbot is trying to give the answer.  
+### 4. Interact with the Chatbot
 
-Type `exit` to quit chat or `Ctr + c` to exit directly from the container, or use the following command in another terminal:
+Once attached, you can start asking questions directly in the terminal.  
+When you see:
+
+```
+🤖 Bot is thinking...
+```
+
+it means the chatbot is generating a response.
+
+To exit the chat, type `exit` or use `Ctrl + C`.  
+Alternatively, you can shut down all services from another terminal using:
+
 ```bash
 docker compose down
 ```
+### 5. Output example:
+<img width="1049" height="594" alt="image" src="https://github.com/user-attachments/assets/7c32047b-df64-49dc-a54d-3c2412b515fc" />
+
+---
